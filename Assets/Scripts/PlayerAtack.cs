@@ -4,7 +4,9 @@ using UnityEngine;
 public class PlayerAtack : MonoBehaviour
 {
     public float speed;
-    public GameObject gun, projectile;
+    public GameObject shootPoint, projectile; 
+    public int damage = 10; 
+    public float attackRange = 1.5f; 
 
     private void Update()
     {
@@ -16,6 +18,6 @@ public class PlayerAtack : MonoBehaviour
 
     private void Atack()
     {
-        Instantiate(projectile, gun.transform.position, Quaternion.identity);
+        Instantiate(projectile, shootPoint.transform.position, Quaternion.identity);
     }
 }
