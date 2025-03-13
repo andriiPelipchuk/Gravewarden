@@ -1,0 +1,79 @@
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+
+
+namespace Assets.Scripts
+{
+    public class Melee : Character
+    {
+        public float detectionRadius = 4;
+        public float health = 50;
+        public float stopDistance = 2;
+        public float coolDown = 1;
+        public float damage;
+
+
+        private AIMovement aiMovement;
+        [SerializeField] LayerMask targetMasks;
+
+        private bool coroutineIsRunning = false;
+        void Start()
+        {
+            Health = health;
+            AttackDamage = damage;
+            AttackRange = stopDistance;
+            AttackCooldown = coolDown;
+
+            aiMovement = GetComponent<AIMovement>();
+            aiMovement.AddParameters(this);
+        }
+
+        private void Update()
+        {
+            Target = FindClouserTarget();
+        }
+        public override Transform FindClouserTarget()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetMasks);
+            Transform closestTarget = null;
+            float closestDistance = Mathf.Infinity;
+
+            foreach (Collider col in colliders)
+            {
+                float distance = Vector3.Distance(transform.position, col.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = col.transform;
+                }
+            }
+
+            target = closestTarget; 
+            return target;
+        }
+
+        public override void Attack()
+        {
+            if (!coroutineIsRunning)
+                StartCoroutine(AttackCoroutine());
+        }
+
+
+        private IEnumerator AttackCoroutine()
+        {
+            coroutineIsRunning = true;
+            canAttack = false;
+            Debug.Log("Enemy attacks");
+            // Realization attack & adjust cooldown for animations 
+            yield return new WaitForSeconds(AttackCooldown);
+            canAttack = true;
+            coroutineIsRunning = false;
+        }
+        protected override void Die()
+        {
+            Debug.Log("Enemy has died");
+        }
+
+    }
+}

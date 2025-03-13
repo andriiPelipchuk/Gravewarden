@@ -10,7 +10,11 @@ namespace Assets.Scripts
         public float AttackDamage { get; protected set; }
         public float AttackRange { get; protected set; }
         public float AttackCooldown { get; protected set; }
+        public Transform Target {  get; protected set; }
+
         protected bool canAttack = true;
+
+        protected Transform target;
 
         public virtual void TakeDamage(float amount)
         {
@@ -20,7 +24,8 @@ namespace Assets.Scripts
                 Die();
             }
         }
-
+        public virtual Transform FindClouserTarget() { return target; }
+        public abstract void Attack();
         protected abstract void Die();
     }
 }

@@ -45,9 +45,10 @@ GameObject:
   - component: {fileID: 3051283140641101827}
   - component: {fileID: 3626370925548443230}
   - component: {fileID: 3870585638577883788}
-  - component: {fileID: 6753883036027171116}
+  - component: {fileID: 6012316991492642214}
+  - component: {fileID: 4270514675520232879}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +193,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6753883036027171116
+--- !u!114 &6012316991492642214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,13 +202,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7511953894253874792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca18c8060d12ea458e305cab9254170, type: 3}
+  m_Script: {fileID: 11500000, guid: 5649761a561f0d04bac1eadaaaf54842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
-  player: {fileID: 0}
-  attackRange: 2
-  stopDistance: 5
-  shootInterval: 2
-  projectilePrefab: {fileID: 7511382884029822658, guid: 9a6c495fc36736240a9d45386d9b219e, type: 3}
-  shootPoint: {fileID: 6992687082485735674}
+  detectionRadius: 4
+  health: 50
+  stopDistance: 2
+  coolDown: 1
+  damage: 0
+  targetMasks:
+    serializedVersion: 2
+    m_Bits: 136
+--- !u!114 &4270514675520232879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7511953894253874792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285e47704b9800d47a2b063fb64172f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

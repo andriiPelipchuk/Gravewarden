@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 namespace Assets.Scripts 
 {
@@ -56,6 +57,7 @@ namespace Assets.Scripts
             }
 
             Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+
             if (direction.magnitude >= 0.1f && !isRolling)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
@@ -86,7 +88,7 @@ namespace Assets.Scripts
             isRolling = false;
         }
 
-        private void Attack()
+        public override void Attack()
         {
             if (canAttack)
             {
