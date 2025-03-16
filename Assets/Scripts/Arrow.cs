@@ -6,35 +6,62 @@ namespace Assets.Scripts
     public class Arrow : MonoBehaviour
     {
         public float speed;
-        private Vector3 target;
+        public float lifeTime;
 
-        [SerializeField] LayerMask layers;
+        private ObjectPool arowsPool;
+
+        private Vector3 direction;
+        private bool achieveTarget = false;
+
+        private IEnumerator coroutine;
+
+        private void Start()
+        {
+            coroutine = DisableProjectile();
+        }
 
         private void Update()
         {
-            MoveToTarget();
+            if(!achieveTarget) 
+                MoveToTarget();
         }
-
+        public void Init(ObjectPool objectPool)
+        {
+            arowsPool = objectPool;
+        }
         public void AddTarget(Vector3 target) 
         {
-            this.target = target;
+            transform.LookAt(target);
+            direction = (target - transform.position).normalized;
+
+            StartCoroutine(coroutine);
         }
         private void MoveToTarget()
         {
-            var direction = (target - transform.position).normalized;
             transform.position += direction * speed * Time.deltaTime;
-
-            // FIX IT
-            transform.LookAt(target);
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == layers)
-            {
-                print("take damage");
-            }
-            Destroy(gameObject, 2);
+            achieveTarget = true;
+            gameObject.transform.SetParent(collision.transform, true);
+            StopCoroutine(coroutine);
+            lifeTime /= 3;
+            StartCoroutine(coroutine);
+        }
+
+        private IEnumerator DisableProjectile()
+        {
+            yield return new WaitForSeconds(lifeTime);
+            Deactivate();
+        }
+        private void Deactivate()
+        {
+            gameObject.transform.parent = null;
+            achieveTarget = false;
+            var collider = gameObject.GetComponent<Collider>();
+            collider.enabled = false;
+            arowsPool.ReturnObject(this);
         }
     }
 }

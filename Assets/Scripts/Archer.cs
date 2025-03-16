@@ -12,10 +12,11 @@ namespace Assets.Scripts
         public float coolDown = 3;
         public float damage;
         public Transform bow;
-        public GameObject arrowPrefab;
 
         private AIMovement aiMovement;
+        private ObjectPool ObjectPool;
         [SerializeField] LayerMask targetMasks;
+        [SerializeField] GameObject arrows;
 
         private bool coroutineIsRunning = false;
         void Start()
@@ -27,6 +28,7 @@ namespace Assets.Scripts
 
             aiMovement = GetComponent<AIMovement>();
             aiMovement.AddParameters(this);
+            ObjectPool = arrows.GetComponent<ObjectPool>();
         }
 
         private void Update()
@@ -65,18 +67,29 @@ namespace Assets.Scripts
             coroutineIsRunning = true;
             canAttack = false;
             Debug.Log("Enemy attacks");
+
+            var arrow = ObjectPool.GetObject();
+
+            arrow.transform.position = bow.position;
+            arrow.transform.SetParent(bow, true);
+
+            arrow.gameObject.SetActive(true);
+
+            var arrowClass = arrow.GetComponent<Arrow>();
+            arrowClass.Init(ObjectPool);
+
             // Realization attack & adjust cooldown for animations 
             yield return new WaitForSeconds(AttackCooldown);
-            Shoot();
+            arrow.transform.parent = null;
+            Shoot(arrowClass);
+
             canAttack = true;
             coroutineIsRunning = false;
         }
 
-        private void Shoot()
+        private void Shoot(Arrow arrow)
         {
-            var arrow = Instantiate(arrowPrefab, bow.position, Quaternion.identity);
-            var arrowClass = arrow.GetComponent<Arrow>();
-            arrowClass.AddTarget(target.position);
+            arrow.AddTarget(target.position);
         }
         protected override void Die()
         {
