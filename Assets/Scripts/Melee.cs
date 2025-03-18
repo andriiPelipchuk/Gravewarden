@@ -64,7 +64,7 @@ namespace Assets.Scripts
         {
             coroutineIsRunning = true;
             canAttack = false;
-            Debug.Log("Enemy attacks");
+            Debug.Log(gameObject.name + "Attacks");
             // Realization attack & adjust cooldown for animations 
             yield return new WaitForSeconds(AttackCooldown);
             canAttack = true;

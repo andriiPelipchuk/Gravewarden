@@ -7,13 +7,14 @@ namespace Assets.Scripts
 {
     public class ObjectPool : MonoBehaviour
     {
-        public GameObject prefab;
+        public Arrow prefab;
         public int poolSize = 50; 
 
-        private Queue<Arrow> pool = new Queue<Arrow>();
+        private Queue<Arrow> pool;
 
         private void Awake()
         {
+            pool = new Queue<Arrow>();
             for (int i = 0; i < poolSize; i++)
             {
                 CreateNewArrow();
@@ -22,10 +23,9 @@ namespace Assets.Scripts
 
         void CreateNewArrow()
         {
-            GameObject arrowObj = Instantiate(prefab);
-            Arrow arrow = arrowObj.GetComponent<Arrow>();
-            arrow.gameObject.SetActive(false);
-            pool.Enqueue(arrow);
+            Arrow arrowObj = Instantiate(prefab);
+            arrowObj.gameObject.SetActive(false);
+            pool.Enqueue(arrowObj);
         }
 
         public Arrow GetObject()
@@ -44,5 +44,6 @@ namespace Assets.Scripts
             arrow.gameObject.SetActive(false);
             pool.Enqueue(arrow);
         }
+
     }
 }

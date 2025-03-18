@@ -12,6 +12,7 @@ namespace Assets.Scripts
 
         private Vector3 direction;
         private bool achieveTarget = false;
+        private bool itIsMove = false;
 
         private IEnumerator coroutine;
 
@@ -31,6 +32,7 @@ namespace Assets.Scripts
         }
         public void AddTarget(Vector3 target) 
         {
+            itIsMove = true;
             transform.LookAt(target);
             direction = (target - transform.position).normalized;
 
@@ -41,13 +43,13 @@ namespace Assets.Scripts
             transform.position += direction * speed * Time.deltaTime;
         }
 
-        private void OnCollisionEnter(Collision collision)
+
+        private void OnTriggerEnter(Collider other)
         {
+            if(!itIsMove)
+                return;
             achieveTarget = true;
-            gameObject.transform.SetParent(collision.transform, true);
-            StopCoroutine(coroutine);
-            lifeTime /= 3;
-            StartCoroutine(coroutine);
+            gameObject.transform.SetParent(other.transform, true);
         }
 
         private IEnumerator DisableProjectile()
@@ -58,9 +60,8 @@ namespace Assets.Scripts
         private void Deactivate()
         {
             gameObject.transform.parent = null;
+            itIsMove = false;
             achieveTarget = false;
-            var collider = gameObject.GetComponent<Collider>();
-            collider.enabled = false;
             arowsPool.ReturnObject(this);
         }
     }

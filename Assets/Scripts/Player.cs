@@ -16,12 +16,15 @@ namespace Assets.Scripts
         private Vector3 rollDirection;
         private bool isRolling = false;
         private float lastRollTime;
+
+        [SerializeField] SkeletonSpawner spawner;
+
         public Transform cameraTransform;
 
         void Start()
         {
-            //rb = GetComponent<Rigidbody>();
             controller = GetComponent<CharacterController>();
+            spawner = GetComponent<SkeletonSpawner>();
             Health = 100;
             Speed = 3f;
             AttackDamage = 10f;
@@ -40,6 +43,8 @@ namespace Assets.Scripts
             {
                 Attack();
             }
+            if (Input.GetKeyDown(KeyCode.E))
+                spawner.SpawnSkeleton();
 
             HandleMovement();
         }

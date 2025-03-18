@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6992687082485735674}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3870585638577883788}
   - component: {fileID: 6012316991492642214}
   - component: {fileID: 4270514675520232879}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}

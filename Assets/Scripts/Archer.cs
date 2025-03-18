@@ -10,13 +10,13 @@ namespace Assets.Scripts
         public float health = 50;
         public float stopDistance = 8;
         public float coolDown = 3;
+        public float rechange = 3;
         public float damage;
         public Transform bow;
 
         private AIMovement aiMovement;
-        private ObjectPool ObjectPool;
+        private ObjectPool objectPool;
         [SerializeField] LayerMask targetMasks;
-        [SerializeField] GameObject arrows;
 
         private bool coroutineIsRunning = false;
         void Start()
@@ -28,7 +28,7 @@ namespace Assets.Scripts
 
             aiMovement = GetComponent<AIMovement>();
             aiMovement.AddParameters(this);
-            ObjectPool = arrows.GetComponent<ObjectPool>();
+            objectPool = FindAnyObjectByType<ObjectPool>().GetComponent<ObjectPool>();
         }
 
         private void Update()
@@ -57,36 +57,60 @@ namespace Assets.Scripts
 
         public override void Attack()
         {
-            if (!coroutineIsRunning)
+            ChoseAttack();
+        }
+
+        private void ChoseAttack()
+        {
+            if(coroutineIsRunning && !canAttack)
+                return;
+
+            var distanceToTarget = Vector3.Distance(transform.position, Target.position);
+            if (distanceToTarget > 2)
+                StartCoroutine(ShootCoroutine());
+            else
                 StartCoroutine(AttackCoroutine());
         }
 
 
-        private IEnumerator AttackCoroutine()
+        private IEnumerator ShootCoroutine()
         {
             coroutineIsRunning = true;
             canAttack = false;
-            Debug.Log("Enemy attacks");
 
-            var arrow = ObjectPool.GetObject();
+            yield return new WaitForSeconds(rechange);
+
+            var arrow = objectPool.GetObject();
 
             arrow.transform.position = bow.position;
-            arrow.transform.SetParent(bow, true);
-
+            arrow.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            arrow.transform.SetParent(bow.parent , true);
             arrow.gameObject.SetActive(true);
 
             var arrowClass = arrow.GetComponent<Arrow>();
-            arrowClass.Init(ObjectPool);
+            arrowClass.Init(objectPool);
 
             // Realization attack & adjust cooldown for animations 
             yield return new WaitForSeconds(AttackCooldown);
+            Debug.Log(gameObject.name + "Attacks");
             arrow.transform.parent = null;
+
             Shoot(arrowClass);
 
             canAttack = true;
             coroutineIsRunning = false;
         }
 
+        private IEnumerator AttackCoroutine()
+        {
+            coroutineIsRunning = true;
+            canAttack = false;
+            Debug.Log(gameObject.name + " Melee Attack");
+            // Realization attack & adjust cooldown for animations 
+            yield return new WaitForSeconds(AttackCooldown / 3);
+            canAttack = true;
+            coroutineIsRunning = false;
+        }
         private void Shoot(Arrow arrow)
         {
             arrow.AddTarget(target.position);
