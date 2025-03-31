@@ -6,12 +6,11 @@ namespace Assets.Scripts
 {
     public class Player : Character
     {
-        public float speed = 5.0f;
-        public float rollSpeed = 10.0f;
-        public float rotationSpeed = 700f;
-        public float rollCooldown = 1f;
+        public float speed = 5;
+        public float rollSpeed = 10;
+        public float rotationSpeed = 700;
+        public float rollCooldown = 1;
 
-        //private Rigidbody rb;
         private CharacterController controller;
         private Vector3 rollDirection;
         private bool isRolling = false;
@@ -24,10 +23,10 @@ namespace Assets.Scripts
         void Start()
         {
             controller = GetComponent<CharacterController>();
-            spawner = GetComponent<SkeletonSpawner>();
+            //spawner = GetComponent<SkeletonSpawner>();
             Health = 100;
-            Speed = 3f;
-            AttackDamage = 10f;
+            Speed = speed;
+            AttackDamage = 10f; // Attack Damage& Range will be in weapon
             AttackRange = 1.5f;
             AttackCooldown = 1f;
         }

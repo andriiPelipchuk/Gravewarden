@@ -31,15 +31,16 @@ namespace Assets.Scripts
 
         public void SpawnSkeleton()
         {
-            /*if(skeletonAlive)
-                return;*/
+            if (skeletonAlive)
+                return;
             foreach (Transform spawnPoint in spawners) 
             {
-                GameObject helper = GetFromPool();
-                helper.transform.position = spawnPoint.position; 
-                helper.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+                GameObject skeleton = GetFromPool();
+                skeleton.transform.position = spawnPoint.position; 
+                skeleton.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+                skeleton.SetActive(true);
             }
-            //skeletonAlive = true;
+            skeletonAlive = true;
         }
 
         private GameObject GetFromPool()
