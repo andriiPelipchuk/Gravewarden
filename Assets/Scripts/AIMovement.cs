@@ -16,24 +16,27 @@ namespace Assets.Scripts
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
+            if (agent == null)
+            {
+                Debug.LogError("NavMeshAgent component is missing on this GameObject.");
+            }
         }
         void Update()
         {
-            targetPos = character.Target;
-            if (targetPos != null)
-            {
-                float target = Vector3.Distance(transform.position, targetPos.position);
-                MoveToTarget(target);
-                RotateToTarget(targetPos);
-            }
+            if (character == null || character.Target == null)
+                return;
 
+            targetPos = character.Target;
+            float distanceToTarget = Vector3.Distance(transform.position, targetPos.position);
+            MoveToTarget(distanceToTarget);
+            RotateToTarget(targetPos);
         }
 
         private void RotateToTarget(Transform target)
         {
             Vector3 direction = (target.position - transform.position).normalized;
 
-            if (direction != Vector3.zero) 
+            if (direction.magnitude > 0.01f) 
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
@@ -44,11 +47,17 @@ namespace Assets.Scripts
         {
             if (target > stopDistance)
             {
-                agent.SetDestination(targetPos.position);
+                if (!agent.hasPath || agent.destination != targetPos.position)
+                {
+                    agent.SetDestination(targetPos.position);
+                }
             }
             else 
             {
-                agent.ResetPath();
+                if (agent.hasPath)
+                {
+                    agent.ResetPath();
+                }
                 character.Attack();
             }
 
@@ -56,9 +65,15 @@ namespace Assets.Scripts
         public void AddParameters(Character characters)
         {
             character = characters.GetComponent<Character>();
+            if (character == null)
+            {
+                Debug.LogError("Character component not found on the provided GameObject.");
+                return;
+            }
 
             agent.stoppingDistance = character.AttackRange;
             stopDistance = character.AttackRange;
         }
+
     }
 }

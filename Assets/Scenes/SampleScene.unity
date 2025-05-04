@@ -678,6 +678,12 @@ MonoBehaviour:
   - {fileID: 179802224}
   - {fileID: 1139108721}
   - {fileID: 1204826986}
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  detectionRadius: 1
+  repositionRadius: 1
+  maxRepositionAttempts: 1
 --- !u!1 &570962471
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +893,7 @@ GameObject:
   - component: {fileID: 734838599}
   - component: {fileID: 734838598}
   - component: {fileID: 734838597}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1414,7 +1420,7 @@ GameObject:
   - component: {fileID: 1930985331}
   - component: {fileID: 1930985330}
   - component: {fileID: 1930985329}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

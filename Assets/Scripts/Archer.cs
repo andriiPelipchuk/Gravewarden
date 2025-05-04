@@ -18,6 +18,9 @@ namespace Assets.Scripts
         private ObjectPool objectPool;
         [SerializeField] LayerMask targetMasks;
 
+        private float targetUpdateInterval = 0.5f;
+        private float targetUpdateTimer = 0;
+
         private bool coroutineIsRunning = false;
         void Start()
         {
@@ -28,15 +31,31 @@ namespace Assets.Scripts
 
             aiMovement = GetComponent<AIMovement>();
             aiMovement.AddParameters(this);
+
             objectPool = FindAnyObjectByType<ObjectPool>().GetComponent<ObjectPool>();
+            if (objectPool == null)
+            {
+                Debug.LogError("ObjectPool not found in the scene.");
+            }
         }
 
         private void Update()
         {
-            Target = FindClouserTarget();
+            targetUpdateTimer += Time.deltaTime;
+            if (targetUpdateTimer >= targetUpdateInterval)
+            {
+                Target = FindClouserTarget();
+                targetUpdateTimer = 0;
+            }
         }
         public override Transform FindClouserTarget()
         {
+            if (targetMasks == 0)
+            {
+                Debug.LogWarning("Target masks are not set for the Archer.");
+                return null;
+            }
+
             Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetMasks);
             Transform closestTarget = null;
             float closestDistance = Mathf.Infinity;
@@ -62,7 +81,7 @@ namespace Assets.Scripts
 
         private void ChoseAttack()
         {
-            if(coroutineIsRunning && !canAttack)
+            if (coroutineIsRunning || !canAttack || Target == null)
                 return;
 
             var distanceToTarget = Vector3.Distance(transform.position, Target.position);
@@ -72,7 +91,6 @@ namespace Assets.Scripts
                 StartCoroutine(AttackCoroutine());
         }
 
-
         private IEnumerator ShootCoroutine()
         {
             coroutineIsRunning = true;
@@ -81,18 +99,23 @@ namespace Assets.Scripts
             yield return new WaitForSeconds(rechange);
 
             var arrow = objectPool.GetObject();
+            if (arrow == null)
+            {
+                Debug.LogError("Failed to retrieve an arrow from the object pool.");
+                coroutineIsRunning = false;
+                canAttack = true;
+                yield break;
+            }
 
             arrow.transform.position = bow.position;
             arrow.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-            arrow.transform.SetParent(bow.parent , true);
+            arrow.transform.SetParent(bow.parent, true);
             arrow.gameObject.SetActive(true);
 
             var arrowClass = arrow.GetComponent<Arrow>();
             arrowClass.Init(objectPool);
 
-            // Realization attack & adjust cooldown for animations 
             yield return new WaitForSeconds(AttackCooldown);
-            Debug.Log(gameObject.name + "Attacks");
             arrow.transform.parent = null;
 
             Shoot(arrowClass);
@@ -100,12 +123,10 @@ namespace Assets.Scripts
             canAttack = true;
             coroutineIsRunning = false;
         }
-
         private IEnumerator AttackCoroutine()
         {
             coroutineIsRunning = true;
             canAttack = false;
-            Debug.Log(gameObject.name + " Melee Attack");
             // Realization attack & adjust cooldown for animations 
             yield return new WaitForSeconds(AttackCooldown / 3);
             canAttack = true;
