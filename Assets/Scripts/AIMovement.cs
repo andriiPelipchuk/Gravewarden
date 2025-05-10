@@ -23,10 +23,13 @@ namespace Assets.Scripts
         }
         void Update()
         {
-            if (character == null || character.Target == null)
+            if (character == null || character.Target == null && character.peacefuleTarget == null)
                 return;
+            if(character.Target != null)
+                targetPos = character.Target;
+            else
+                targetPos = character.peacefuleTarget.transform;
 
-            targetPos = character.Target;
             float distanceToTarget = Vector3.Distance(transform.position, targetPos.position);
             MoveToTarget(distanceToTarget);
             RotateToTarget(targetPos);

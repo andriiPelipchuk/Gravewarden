@@ -15,6 +15,7 @@ namespace Assets.Scripts
         protected bool canAttack = true;
 
         protected Transform target;
+        public GameObject peacefuleTarget;
 
         public virtual void TakeDamage(float amount)
         {

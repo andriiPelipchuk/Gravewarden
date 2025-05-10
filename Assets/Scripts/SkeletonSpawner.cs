@@ -26,7 +26,7 @@ namespace Assets.Scripts
             pool = new Queue<GameObject>();
             for (int i = 0; i < spawners.Length; i++)
             {
-                CreateNewSkeleton();
+                CreateNewSkeleton(spawners[i].gameObject);
             }
         }
 
@@ -70,9 +70,12 @@ namespace Assets.Scripts
                 Gizmos.DrawWireSphere(point.position, checkRadius);
             }
         }
-        private void CreateNewSkeleton()
+        private void CreateNewSkeleton(GameObject peacefulTarget)
         {
             GameObject skeleton = Instantiate(prefab);
+            var character = skeleton.GetComponent<Character>();
+            character.peacefuleTarget = peacefulTarget;
+
             skeleton.gameObject.SetActive(false);
             pool.Enqueue(skeleton);
         }

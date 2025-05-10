@@ -1,29 +1,54 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 namespace Assets.Scripts 
 {
     public class Player : Character
     {
+
+        public InputActionAsset inputActions;
+
+        public InputAction moveAction;
+        public InputAction rollAction;
+        public InputAction atackAction;
+        public InputAction spawnAction;
+
         public float speed = 5;
         public float rollSpeed = 10;
         public float rotationSpeed = 700;
         public float rollCooldown = 1;
 
-        private CharacterController controller;
-        private Vector3 rollDirection;
-        private bool isRolling = false;
-        private float lastRollTime;
+        public Transform cameraTransform;
+
+        private CharacterController _controller;
+        private Vector3 _rollDirection;
+        private bool _isRolling = false;
+        private float _lastRollTime;
+        private Animator _animator;
+
+        private Vector2 _moveInput;
+        private Vector3 _damageMoveVelocity;
+        private float _damageMoveVelocityDeceleration = 5f;
+
+        private static readonly int SpeedAnimationsHash = Animator.StringToHash("Speed");
+        private static readonly int MoveAnimationsHash = Animator.StringToHash("IsMoving");
 
         [SerializeField] SkeletonSpawner spawner;
 
-        public Transform cameraTransform;
+
+        private void Awake()
+        {
+            moveAction = inputActions.FindAction("Move");
+            rollAction = inputActions.FindAction("Roll");
+            atackAction = inputActions.FindAction("Attack");
+            spawnAction = inputActions.FindAction("Spawn");
+        }
 
         void Start()
         {
-            controller = GetComponent<CharacterController>();
-            //spawner = GetComponent<SkeletonSpawner>();
+            _controller = GetComponent<CharacterController>();
             Health = 100;
             Speed = speed;
             AttackDamage = 10f; // Attack Damage& Range will be in weapon
@@ -31,65 +56,83 @@ namespace Assets.Scripts
             AttackCooldown = 1f;
         }
 
+        private void OnEnable()
+        {
+            inputActions.FindActionMap("Player").Enable();
+        }
+
+        private void OnDisable()
+        {
+            inputActions.FindActionMap("Player").Disable();
+        }
+
         void Update()
         {
-            if (Time.time - lastRollTime > rollCooldown && !isRolling && Input.GetButtonDown("Jump"))
+
+            if (Time.time - _lastRollTime > rollCooldown && !_isRolling && rollAction.triggered)
             {
                 StartRoll();
-                // Activate animation
             }
-            if (Input.GetButtonDown("Fire1"))
+
+            if (atackAction.triggered)
             {
                 Attack();
             }
-            if (Input.GetKeyDown(KeyCode.E))
+
+            if (spawnAction.triggered)
+            {
                 spawner.SpawnSkeleton();
+            }
 
             HandleMovement();
         }
 
         void HandleMovement()
         {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
+            _moveInput = moveAction.ReadValue<Vector2>();
+            var inputMagnitude = _moveInput.magnitude;
 
-            if (Input.touchCount > 0)
+            var moveForce = transform.forward * (inputMagnitude * speed * Time.deltaTime);
+            var nextPosition = transform.position + moveForce;
+
+            nextPosition += _damageMoveVelocity * Time.deltaTime;
+            _damageMoveVelocity = Vector3.Lerp(_damageMoveVelocity, Vector3.zero, _damageMoveVelocityDeceleration * Time.deltaTime);
+
+            if (NavMesh.SamplePosition(nextPosition, out var navHit, 2f, NavMesh.AllAreas))
             {
-                Touch touch = Input.GetTouch(0);
-                horizontal = touch.position.x > Screen.width / 2 ? 1 : -1;
-                vertical = touch.position.y > Screen.height / 2 ? 1 : -1;
+                nextPosition = navHit.position;
             }
 
-            Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+            transform.position = nextPosition;
 
-            if (direction.magnitude >= 0.1f && !isRolling)
+            if (inputMagnitude > 0.1f)
             {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSpeed, 0.1f);
+                var forwardDirection = transform.position - cameraTransform.position;
+                forwardDirection.y = 0;
 
-                transform.rotation = Quaternion.Euler(0, angle, 0);
+                var rightDirection = Vector3.Cross(forwardDirection, Vector3.down);
+                var targetDirection = forwardDirection * _moveInput.y + rightDirection * _moveInput.x;
+                targetDirection.Normalize();
 
-                Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-                controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection),
+                    rotationSpeed * Time.deltaTime);
             }
 
-            if (isRolling)
-            {
-                controller.Move(rollDirection * rollSpeed * Time.deltaTime);
-            }
+            /*_animator.SetFloat(SpeedAnimationsHash, Mathf.Clamp(inputMagnitude, 0.1f, 1));
+            _animator.SetBool(MoveAnimationsHash, inputMagnitude > 0.1f);*/
         }
 
         void StartRoll()
         {
-            isRolling = true;
-            lastRollTime = Time.time;
-            rollDirection = transform.forward;
+            _isRolling = true;
+            _lastRollTime = Time.time;
+            _rollDirection = transform.forward;
             Invoke("EndRoll", 0.5f);
         }
 
         void EndRoll()
         {
-            isRolling = false;
+            _isRolling = false;
         }
 
         public override void Attack()
