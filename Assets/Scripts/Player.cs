@@ -22,7 +22,7 @@ namespace Assets.Scripts
 
         public Transform cameraTransform;
 
-        private CharacterController _controller;
+        //private CharacterController _controller;
         private Vector3 _rollDirection;
         private bool _isRolling = false;
         private float _lastRollTime;
@@ -30,7 +30,7 @@ namespace Assets.Scripts
 
         private Vector2 _moveInput;
         private Vector3 _damageMoveVelocity;
-        private float _damageMoveVelocityDeceleration = 5f;
+        [SerializeField] private float _damageMoveVelocityDeceleration = 5f;
 
         private static readonly int SpeedAnimationsHash = Animator.StringToHash("Speed");
         private static readonly int MoveAnimationsHash = Animator.StringToHash("IsMoving");
@@ -48,8 +48,9 @@ namespace Assets.Scripts
 
         void Start()
         {
-            _controller = GetComponent<CharacterController>();
+            //_controller = GetComponent<CharacterController>();
             Health = 100;
+            currentHP = Health;
             Speed = speed;
             AttackDamage = 10f; // Attack Damage& Range will be in weapon
             AttackRange = 1.5f;
@@ -90,19 +91,25 @@ namespace Assets.Scripts
         void HandleMovement()
         {
             _moveInput = moveAction.ReadValue<Vector2>();
+
             var inputMagnitude = _moveInput.magnitude;
 
             var moveForce = transform.forward * (inputMagnitude * speed * Time.deltaTime);
             var nextPosition = transform.position + moveForce;
 
+
+            _damageMoveVelocity = Vector3.Lerp(_damageMoveVelocity, new Vector3(0, 1, 0), _damageMoveVelocityDeceleration * Time.deltaTime);
             nextPosition += _damageMoveVelocity * Time.deltaTime;
-            _damageMoveVelocity = Vector3.Lerp(_damageMoveVelocity, Vector3.zero, _damageMoveVelocityDeceleration * Time.deltaTime);
 
             if (NavMesh.SamplePosition(nextPosition, out var navHit, 2f, NavMesh.AllAreas))
             {
                 nextPosition = navHit.position;
             }
-
+            else
+            {
+                Debug.LogWarning("Player attempted to move outside the NavMesh.");
+            }
+            //nextPosition += Vector3.up * 1;
             transform.position = nextPosition;
 
             if (inputMagnitude > 0.1f)

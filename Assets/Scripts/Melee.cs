@@ -13,6 +13,7 @@ namespace Assets.Scripts
         public float coolDown = 1;
         public float damage;
 
+        public Weapon weapon;
 
         private AIMovement aiMovement;
         [SerializeField] LayerMask targetMasks;
@@ -21,6 +22,7 @@ namespace Assets.Scripts
         void Start()
         {
             Health = health;
+            currentHP = Health;
             AttackDamage = damage;
             AttackRange = stopDistance;
             AttackCooldown = coolDown;
@@ -55,6 +57,8 @@ namespace Assets.Scripts
 
         public override void Attack()
         {
+            if(peacefuleTarget)
+                return;
             if (!coroutineIsRunning)
                 StartCoroutine(AttackCoroutine());
         }
@@ -62,11 +66,13 @@ namespace Assets.Scripts
 
         private IEnumerator AttackCoroutine()
         {
+            weapon.ActivateHitbox(AttackDamage);
             coroutineIsRunning = true;
             canAttack = false;
             Debug.Log(gameObject.name + "Attacks");
             // Realization attack & adjust cooldown for animations 
             yield return new WaitForSeconds(AttackCooldown);
+            weapon.DeactivateHitbox();
             canAttack = true;
             coroutineIsRunning = false;
         }

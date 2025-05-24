@@ -205,11 +205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5649761a561f0d04bac1eadaaaf54842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  peacefuleTarget: {fileID: 0}
   detectionRadius: 4
   health: 50
   stopDistance: 2
   coolDown: 1
   damage: 0
+  weapon: {fileID: 0}
   targetMasks:
     serializedVersion: 2
     m_Bits: 136

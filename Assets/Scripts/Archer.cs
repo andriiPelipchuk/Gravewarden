@@ -25,6 +25,7 @@ namespace Assets.Scripts
         void Start()
         {
             Health = health;
+            currentHP = Health;
             AttackDamage = damage;
             AttackRange = stopDistance;
             AttackCooldown = coolDown;
@@ -113,6 +114,8 @@ namespace Assets.Scripts
             arrow.gameObject.SetActive(true);
 
             var arrowClass = arrow.GetComponent<Arrow>();
+
+            arrowClass.SetData(AttackDamage, gameObject);
             arrowClass.Init(objectPool);
 
             yield return new WaitForSeconds(AttackCooldown);

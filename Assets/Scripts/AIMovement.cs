@@ -32,7 +32,7 @@ namespace Assets.Scripts
 
             float distanceToTarget = Vector3.Distance(transform.position, targetPos.position);
             MoveToTarget(distanceToTarget);
-            RotateToTarget(targetPos);
+            
         }
 
         private void RotateToTarget(Transform target)
@@ -61,9 +61,11 @@ namespace Assets.Scripts
                 {
                     agent.ResetPath();
                 }
+                if (character.peacefuleTarget.transform == targetPos)
+                    return;
                 character.Attack();
             }
-
+            RotateToTarget(targetPos);
         }
         public void AddParameters(Character characters)
         {

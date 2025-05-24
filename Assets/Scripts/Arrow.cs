@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace Assets.Scripts
 {
@@ -10,9 +11,12 @@ namespace Assets.Scripts
 
         private ObjectPool arowsPool;
 
-        private Vector3 direction;
-        private bool achieveTarget = false;
-        private bool itIsMove = false;
+        private Vector3 _direction;
+        private bool _achieveTarget = false;
+        private bool _blockTrigger = true;
+
+        private float _damage;
+        private GameObject _owner;
 
         private IEnumerator coroutine;
 
@@ -23,8 +27,13 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if(!achieveTarget) 
+            if(!_achieveTarget) 
                 MoveToTarget();
+        }
+        public void SetData(float damage, GameObject owner)
+        {
+            _damage = damage;
+            _owner = owner;
         }
         public void Init(ObjectPool objectPool)
         {
@@ -32,23 +41,31 @@ namespace Assets.Scripts
         }
         public void AddTarget(Vector3 target) 
         {
-            itIsMove = true;
+            _blockTrigger = false;
             transform.LookAt(target);
-            direction = (target - transform.position).normalized;
+            _direction = (target - transform.position).normalized;
 
             StartCoroutine(coroutine);
         }
         private void MoveToTarget()
         {
-            transform.position += direction * speed * Time.deltaTime;
+            transform.position += _direction * speed * Time.deltaTime;
         }
 
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!itIsMove)
+            if(_blockTrigger)
                 return;
-            achieveTarget = true;
+            if (other.gameObject == _owner) return;
+
+            var target = other.GetComponent<Character>();
+            if (target != null)
+            {
+                target.TakeDamage(_damage);
+            }
+            _achieveTarget = true;
+            _blockTrigger = true;
             gameObject.transform.SetParent(other.transform, true);
         }
 
@@ -60,8 +77,8 @@ namespace Assets.Scripts
         private void Deactivate()
         {
             gameObject.transform.parent = null;
-            itIsMove = false;
-            achieveTarget = false;
+            _blockTrigger = false;
+            _achieveTarget = false;
             arowsPool.ReturnObject(this);
         }
     }
