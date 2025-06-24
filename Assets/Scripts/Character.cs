@@ -24,7 +24,7 @@ namespace Assets.Scripts
         {
             currentHP -= amount;
             HealthBar.SetHealth(currentHP, Health);
-            if (Health <= 0)
+            if (currentHP <= 0)
             {
                 Die();
             }

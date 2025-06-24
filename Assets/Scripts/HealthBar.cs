@@ -29,7 +29,6 @@ namespace Assets.Scripts
 
         public void SetHealth(float current, float max)
         {
-            print(current / max);
             fillImage.fillAmount = current / max;
         }
     }

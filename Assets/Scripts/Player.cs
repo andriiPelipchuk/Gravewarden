@@ -15,6 +15,9 @@ namespace Assets.Scripts
         public InputAction atackAction;
         public InputAction spawnAction;
 
+        [SerializeField] LayerMask targetMasks;
+        public float detectionRadius = 2; // change if add range attack
+
         public float speed = 5;
         public float rollSpeed = 10;
         public float rotationSpeed = 700;
@@ -22,7 +25,6 @@ namespace Assets.Scripts
 
         public Transform cameraTransform;
 
-        //private CharacterController _controller;
         private Vector3 _rollDirection;
         private bool _isRolling = false;
         private float _lastRollTime;
@@ -48,11 +50,10 @@ namespace Assets.Scripts
 
         void Start()
         {
-            //_controller = GetComponent<CharacterController>();
             Health = 100;
             currentHP = Health;
             Speed = speed;
-            AttackDamage = 10f; // Attack Damage& Range will be in weapon
+            AttackDamage = 10f;
             AttackRange = 1.5f;
             AttackCooldown = 1f;
         }
@@ -94,12 +95,21 @@ namespace Assets.Scripts
 
             var inputMagnitude = _moveInput.magnitude;
 
-            var moveForce = transform.forward * (inputMagnitude * speed * Time.deltaTime);
+            var forwardDirection = transform.position - cameraTransform.position;
+            forwardDirection.y = 0;
+
+            var rightDirection = Vector3.Cross(forwardDirection, Vector3.down);
+            var targetDirection = forwardDirection * _moveInput.y + rightDirection * _moveInput.x;
+            targetDirection.y = 0;
+
+            targetDirection.Normalize();
+
+            var moveForce = targetDirection * (inputMagnitude * speed * Time.deltaTime);
             var nextPosition = transform.position + moveForce;
 
 
-            _damageMoveVelocity = Vector3.Lerp(_damageMoveVelocity, new Vector3(0, 1, 0), _damageMoveVelocityDeceleration * Time.deltaTime);
-            nextPosition += _damageMoveVelocity * Time.deltaTime;
+            /*_damageMoveVelocity = Vector3.Lerp(_damageMoveVelocity, new Vector3(0, 1, 0), _damageMoveVelocityDeceleration * Time.deltaTime);
+            nextPosition += _damageMoveVelocity * Time.deltaTime;*/
 
             if (NavMesh.SamplePosition(nextPosition, out var navHit, 2f, NavMesh.AllAreas))
             {
@@ -109,24 +119,51 @@ namespace Assets.Scripts
             {
                 Debug.LogWarning("Player attempted to move outside the NavMesh.");
             }
-            //nextPosition += Vector3.up * 1;
             transform.position = nextPosition;
 
             if (inputMagnitude > 0.1f)
             {
-                var forwardDirection = transform.position - cameraTransform.position;
-                forwardDirection.y = 0;
-
-                var rightDirection = Vector3.Cross(forwardDirection, Vector3.down);
-                var targetDirection = forwardDirection * _moveInput.y + rightDirection * _moveInput.x;
-                targetDirection.Normalize();
-
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection),
-                    rotationSpeed * Time.deltaTime);
+                
+                
+                Debug.DrawRay(transform.position, targetDirection);
+                if (FindClouserTarget() == null)
+                {
+                    transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.LookRotation(targetDirection), rotationSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    var enemyDirection = FindClouserTarget().position - transform.position;
+                    enemyDirection.y = 0; // Ensure we only rotate around the Y axis
+                    enemyDirection.Normalize();
+                    Quaternion targetRotation = Quaternion.LookRotation(enemyDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
             }
 
-            /*_animator.SetFloat(SpeedAnimationsHash, Mathf.Clamp(inputMagnitude, 0.1f, 1));
-            _animator.SetBool(MoveAnimationsHash, inputMagnitude > 0.1f);*/
+            if (_animator != null)
+            {
+                _animator.SetFloat(SpeedAnimationsHash, Mathf.Clamp(inputMagnitude, 0.1f, 1));
+                _animator.SetBool(MoveAnimationsHash, inputMagnitude > 0.1f);
+            }
+        }
+        public override Transform FindClouserTarget()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetMasks);
+            Transform closestTarget = null;
+            float closestDistance = Mathf.Infinity;
+
+            foreach (Collider col in colliders)
+            {
+                float distance = Vector3.Distance(transform.position, col.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = col.transform;
+                }
+            }
+
+            target = closestTarget;
+            return target;
         }
 
         void StartRoll()
