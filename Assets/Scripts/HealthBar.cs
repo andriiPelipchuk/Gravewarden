@@ -27,9 +27,9 @@ namespace Assets.Scripts
             }
         }*/
 
-        public void SetHealth(float current, float max)
+        public void SetHealth(float currentHP, float maxHP)
         {
-            fillImage.fillAmount = current / max;
+            fillImage.fillAmount = currentHP / maxHP;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Assets.Scripts
     public abstract class Character : MonoBehaviour
     {
         public float Health { get; protected set; }
-        protected float currentHP;
+        public float CurrentHP { get; protected set; }
         public float Speed { get; protected set; }
         public float AttackDamage { get; protected set; }
         public float AttackRange { get; protected set; }
@@ -22,9 +22,9 @@ namespace Assets.Scripts
 
         public virtual void TakeDamage(float amount)
         {
-            currentHP -= amount;
-            HealthBar.SetHealth(currentHP, Health);
-            if (currentHP <= 0)
+            CurrentHP -= amount;
+            HealthBar.SetHealth(CurrentHP, Health);
+            if (CurrentHP <= 0)
             {
                 Die();
             }

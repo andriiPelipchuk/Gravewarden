@@ -22,7 +22,7 @@ namespace Assets.Scripts
         void Start()
         {
             Health = health;
-            currentHP = Health;
+            CurrentHP = Health;
             AttackDamage = damage;
             AttackRange = stopDistance;
             AttackCooldown = coolDown;

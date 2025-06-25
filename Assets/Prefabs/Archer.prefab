@@ -198,7 +198,7 @@ MonoBehaviour:
   stopDistance: 8
   coolDown: 1
   rechange: 1.5
-  damage: 55
+  damage: 10
   bow: {fileID: 6992687082485735674}
   targetMasks:
     serializedVersion: 2

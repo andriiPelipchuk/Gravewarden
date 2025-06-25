@@ -23,6 +23,8 @@ namespace Assets.Scripts
         public float rotationSpeed = 700;
         public float rollCooldown = 1;
 
+        public float health;
+
         public Transform cameraTransform;
 
         private Vector3 _rollDirection;
@@ -37,6 +39,8 @@ namespace Assets.Scripts
         private static readonly int SpeedAnimationsHash = Animator.StringToHash("Speed");
         private static readonly int MoveAnimationsHash = Animator.StringToHash("IsMoving");
 
+        private Rigidbody _rigidbody;
+
         [SerializeField] SkeletonSpawner spawner;
 
 
@@ -50,8 +54,10 @@ namespace Assets.Scripts
 
         void Start()
         {
-            Health = 100;
-            currentHP = Health;
+            _rigidbody = GetComponent<Rigidbody>();
+
+            Health = health;
+            CurrentHP = health;
             Speed = speed;
             AttackDamage = 10f;
             AttackRange = 1.5f;
@@ -106,10 +112,6 @@ namespace Assets.Scripts
 
             var moveForce = targetDirection * (inputMagnitude * speed * Time.deltaTime);
             var nextPosition = transform.position + moveForce;
-
-
-            /*_damageMoveVelocity = Vector3.Lerp(_damageMoveVelocity, new Vector3(0, 1, 0), _damageMoveVelocityDeceleration * Time.deltaTime);
-            nextPosition += _damageMoveVelocity * Time.deltaTime;*/
 
             if (NavMesh.SamplePosition(nextPosition, out var navHit, 2f, NavMesh.AllAreas))
             {
