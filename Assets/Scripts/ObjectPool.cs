@@ -7,42 +7,61 @@ namespace Assets.Scripts
 {
     public class ObjectPool : MonoBehaviour
     {
-        public Arrow prefab;
-        public int poolSize = 50; 
+        public Transform heathBarParent;
 
-        private Queue<Arrow> pool;
+        public Arrow arrow;
+        public HealthBar healthBar;
+
+        public int arrowPoolSize = 50; 
+        public int healthBarPoolSize = 20;
+
+        private Queue<Arrow> _arrowPool;
+        private Queue<HealthBar> _healthBarPool;
 
         private void Awake()
         {
-            pool = new Queue<Arrow>();
-            for (int i = 0; i < poolSize; i++)
+            _arrowPool = new Queue<Arrow>();
+            for (int i = 0; i < arrowPoolSize; i++)
             {
                 CreateNewArrow();
             }
+            _healthBarPool = new Queue<HealthBar>();
+            for (int i = 0; i < healthBarPoolSize; i++)
+            {
+                CreateNewHeathBar();
+            }
+        }
+
+        private void CreateNewHeathBar()
+        {
+            var healthBarObj = Instantiate(healthBar);
+            healthBarObj.transform.SetParent(heathBarParent);
+            healthBarObj.gameObject.SetActive(false);
+            _healthBarPool.Enqueue(healthBarObj);
         }
 
         void CreateNewArrow()
         {
-            Arrow arrowObj = Instantiate(prefab);
+            Arrow arrowObj = Instantiate(arrow);
             arrowObj.gameObject.SetActive(false);
-            pool.Enqueue(arrowObj);
+            _arrowPool.Enqueue(arrowObj);
         }
 
         public Arrow GetObject()
         {
 
-            if (pool.Count == 0)
+            if (_arrowPool.Count == 0)
             {
                 CreateNewArrow();
             }
-            return pool.Dequeue();
+            return _arrowPool.Dequeue();
 
         }
 
         public void ReturnObject(Arrow arrow)
         {
             arrow.gameObject.SetActive(false);
-            pool.Enqueue(arrow);
+            _arrowPool.Enqueue(arrow);
         }
 
     }

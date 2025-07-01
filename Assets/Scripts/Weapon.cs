@@ -27,7 +27,7 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            var character = other.GetComponent<Character>();
+            var character = other.transform.parent?.GetComponent<Character>();
             if (character != null)
             {
                 character.TakeDamage(_currentDamage);

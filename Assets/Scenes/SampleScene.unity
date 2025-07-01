@@ -238,6 +238,107 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1480568183}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &82835357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82835361}
+  - component: {fileID: 82835360}
+  - component: {fileID: 82835359}
+  - component: {fileID: 82835358}
+  m_Layer: 5
+  m_Name: Enemy Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &82835358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82835357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &82835359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82835357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
+--- !u!223 &82835360
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82835357}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &82835361
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82835357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &179802223
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +683,6 @@ MonoBehaviour:
   rollCooldown: 1.5
   health: 100
   cameraTransform: {fileID: 330585546}
-  _damageMoveVelocityDeceleration: 5
   spawner: {fileID: 505306259}
 --- !u!4 &346556581
 Transform:
@@ -1981,7 +2081,6 @@ GameObject:
   - component: {fileID: 1480568182}
   - component: {fileID: 1480568181}
   - component: {fileID: 1480568180}
-  - component: {fileID: 1480568186}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2083,69 +2182,6 @@ Transform:
   - {fileID: 382608540}
   m_Father: {fileID: 346556581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1480568186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480568179}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56a972eee7464844289c9d0798c6623a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  peacefuleTarget: {fileID: 0}
-  HealthBar: {fileID: 1240281210}
-  inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 8e3d2222-0c68-4bd1-8972-22b5a3f8a241
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  rollAction:
-    m_Name: Roll
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: fb3c323e-3d71-459e-aa81-17d45e5974e1
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  atackAction:
-    m_Name: Atack
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f68a39aa-ddb1-4544-a778-3ac0957db858
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  spawnAction:
-    m_Name: Spawn
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5a6586c9-8c48-4ada-af40-e895895bbf4b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  targetMasks:
-    serializedVersion: 2
-    m_Bits: 64
-  detectionRadius: 4
-  speed: 5
-  rollSpeed: 10
-  rotationSpeed: 5
-  rollCooldown: 1.5
-  health: 100
-  cameraTransform: {fileID: 330585546}
-  _damageMoveVelocityDeceleration: 5
-  spawner: {fileID: 505306259}
 --- !u!1 &1746896622
 GameObject:
   m_ObjectHideFlags: 0
@@ -2469,8 +2505,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0eb3c28389d7c84aa1f64b6cdd67884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: -3648332269996822124, guid: 2984535f3a2d76543a53fed3a9dedf8e, type: 3}
-  poolSize: 50
+  heathBarParent: {fileID: 0}
+  arrow: {fileID: 0}
+  healthBar: {fileID: 0}
+  arrowPoolSize: 50
+  healthBarPoolSize: 10
 --- !u!4 &2074142698
 Transform:
   m_ObjectHideFlags: 0
@@ -2542,6 +2581,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4291045452875124178, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
+      propertyPath: m_Name
+      value: Enemy Canvas
+      objectReference: {fileID: 0}
     - target: {fileID: 7511953894253874792, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
       propertyPath: m_Name
       value: Archer
@@ -2572,3 +2615,4 @@ SceneRoots:
   - {fileID: 1746896625}
   - {fileID: 402532783}
   - {fileID: 346556581}
+  - {fileID: 82835361}

@@ -59,7 +59,7 @@ namespace Assets.Scripts
                 return;
             if (other.gameObject == _owner) return;
 
-            var target = other.GetComponent<Character>();
+            var target = other.transform.parent?.GetComponent<Character>();
             if (target != null)
             {
                 target.TakeDamage(_damage);

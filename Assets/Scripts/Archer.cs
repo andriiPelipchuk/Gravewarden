@@ -137,6 +137,10 @@ namespace Assets.Scripts
         }
         private void Shoot(Arrow arrow)
         {
+            if(arrow == null || Target == null)
+            {
+                return;
+            }
             arrow.AddTarget(target.position);
         }
         protected override void Die()

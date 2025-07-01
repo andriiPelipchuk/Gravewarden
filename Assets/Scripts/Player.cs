@@ -33,8 +33,8 @@ namespace Assets.Scripts
         private Animator _animator;
 
         private Vector2 _moveInput;
-        private Vector3 _damageMoveVelocity;
-        [SerializeField] private float _damageMoveVelocityDeceleration = 5f;
+/*        private Vector3 _damageMoveVelocity;
+        [SerializeField] private float _damageMoveVelocityDeceleration = 5f;*/
 
         private static readonly int SpeedAnimationsHash = Animator.StringToHash("Speed");
         private static readonly int MoveAnimationsHash = Animator.StringToHash("IsMoving");
