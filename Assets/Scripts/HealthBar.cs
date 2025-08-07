@@ -6,9 +6,7 @@ namespace Assets.Scripts
 {
     public class HealthBar : MonoBehaviour
     {
-        public Image fillImage;
-
-        public void SetHealth(float currentHP, float maxHP)
+        public void SetHealth(float currentHP, float maxHP, Image fillImage)
         {
             fillImage.fillAmount = currentHP / maxHP;
         }

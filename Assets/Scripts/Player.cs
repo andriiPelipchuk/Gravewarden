@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Assets.Scripts 
 {
@@ -16,7 +17,7 @@ namespace Assets.Scripts
         public InputAction spawnAction;
 
         [SerializeField] LayerMask targetMasks;
-        public float detectionRadius = 2; // change if add range attack
+        public float detectionRadius = 2; 
 
         public float speed = 5;
         public float rollSpeed = 10;
@@ -33,8 +34,6 @@ namespace Assets.Scripts
         private Animator _animator;
 
         private Vector2 _moveInput;
-/*        private Vector3 _damageMoveVelocity;
-        [SerializeField] private float _damageMoveVelocityDeceleration = 5f;*/
 
         private static readonly int SpeedAnimationsHash = Animator.StringToHash("Speed");
         private static readonly int MoveAnimationsHash = Animator.StringToHash("IsMoving");

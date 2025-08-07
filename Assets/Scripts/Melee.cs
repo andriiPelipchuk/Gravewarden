@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
 
 
 namespace Assets.Scripts
@@ -12,6 +12,7 @@ namespace Assets.Scripts
         public float stopDistance = 2;
         public float coolDown = 1;
         public float damage;
+        public Image healthFill;
 
         public Weapon weapon;
 
@@ -21,6 +22,7 @@ namespace Assets.Scripts
         private bool coroutineIsRunning = false;
         void Start()
         {
+            HealthFill = healthFill;
             Health = health;
             CurrentHP = Health;
             AttackDamage = damage;

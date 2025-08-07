@@ -7,16 +7,16 @@ namespace Assets.Scripts
 {
     public class ObjectPool : MonoBehaviour
     {
-        public Transform heathBarParent;
+        //public Transform heathBarParent;
 
         public Arrow arrow;
-        public HealthBar healthBar;
+        //public HealthBar healthBar;
 
         public int arrowPoolSize = 50; 
         public int healthBarPoolSize = 20;
 
         private Queue<Arrow> _arrowPool;
-        private Queue<HealthBar> _healthBarPool;
+        //private Queue<HealthBar> _healthBarPool;
 
         private void Awake()
         {
@@ -25,20 +25,20 @@ namespace Assets.Scripts
             {
                 CreateNewArrow();
             }
-            _healthBarPool = new Queue<HealthBar>();
+            /*_healthBarPool = new Queue<HealthBar>();
             for (int i = 0; i < healthBarPoolSize; i++)
             {
                 CreateNewHeathBar();
-            }
+            }*/
         }
 
-        private void CreateNewHeathBar()
+        /*private void CreateNewHeathBar()
         {
             var healthBarObj = Instantiate(healthBar);
             healthBarObj.transform.SetParent(heathBarParent);
             healthBarObj.gameObject.SetActive(false);
             _healthBarPool.Enqueue(healthBarObj);
-        }
+        }*/
 
         void CreateNewArrow()
         {

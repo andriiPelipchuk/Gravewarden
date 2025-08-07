@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -18,12 +19,14 @@ namespace Assets.Scripts
         protected Transform target;
         public GameObject peacefuleTarget;
 
+        public Image HealthFill;
+
         public HealthBar HealthBar;
 
         public virtual void TakeDamage(float amount)
         {
             CurrentHP -= amount;
-            HealthBar.SetHealth(CurrentHP, Health);
+            HealthBar.SetHealth(CurrentHP, Health, HealthFill);
             if (CurrentHP <= 0)
             {
                 Die();
