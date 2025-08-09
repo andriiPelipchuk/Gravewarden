@@ -12,17 +12,15 @@ namespace Assets.Scripts
         public float stopDistance = 2;
         public float coolDown = 1;
         public float damage;
-        public Image healthFill;
 
         public Weapon weapon;
 
+        public Animator _animator;
+
         private AIMovement aiMovement;
         [SerializeField] LayerMask targetMasks;
-
-        private bool coroutineIsRunning = false;
         void Start()
         {
-            HealthFill = healthFill;
             Health = health;
             CurrentHP = Health;
             AttackDamage = damage;
@@ -59,24 +57,22 @@ namespace Assets.Scripts
 
         public override void Attack()
         {
-            if(peacefuleTarget)
-                return;
-            if (!coroutineIsRunning)
+            if (canAttack)
                 StartCoroutine(AttackCoroutine());
         }
 
 
         private IEnumerator AttackCoroutine()
         {
-            weapon.ActivateHitbox(AttackDamage);
-            coroutineIsRunning = true;
             canAttack = false;
-            Debug.Log(gameObject.name + "Attacks");
-            // Realization attack & adjust cooldown for animations 
+            if (_animator != null)
+            {
+                weapon.ActivateHitbox(AttackDamage);
+                _animator.SetTrigger("Attack");
+            }
             yield return new WaitForSeconds(AttackCooldown);
             weapon.DeactivateHitbox();
             canAttack = true;
-            coroutineIsRunning = false;
         }
         protected override void Die()
         {

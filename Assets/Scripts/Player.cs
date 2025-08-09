@@ -28,10 +28,13 @@ namespace Assets.Scripts
 
         public Transform cameraTransform;
 
+        public Animator _animator;
+
+        public Weapon weapon;
+
         private Vector3 _rollDirection;
         private bool _isRolling = false;
         private float _lastRollTime;
-        private Animator _animator;
 
         private Vector2 _moveInput;
 
@@ -54,6 +57,7 @@ namespace Assets.Scripts
         void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+
 
             Health = health;
             CurrentHP = health;
@@ -143,8 +147,8 @@ namespace Assets.Scripts
 
             if (_animator != null)
             {
-                _animator.SetFloat(SpeedAnimationsHash, Mathf.Clamp(inputMagnitude, 0.1f, 1));
-                _animator.SetBool(MoveAnimationsHash, inputMagnitude > 0.1f);
+                /*_animator.SetFloat(SpeedAnimationsHash, Mathf.Clamp(inputMagnitude, 0.1f, 1));
+                _animator.SetBool(MoveAnimationsHash, inputMagnitude > 0.1f);*/
             }
         }
         public override Transform FindClouserTarget()
@@ -191,8 +195,13 @@ namespace Assets.Scripts
         private IEnumerator AttackCoroutine()
         {
             canAttack = false;
-            Debug.Log("Player attacks");
+            if (_animator != null)
+            {
+                weapon.ActivateHitbox(AttackDamage);
+                _animator.SetTrigger("Attack");
+            }
             yield return new WaitForSeconds(AttackCooldown);
+            weapon.DeactivateHitbox();
             canAttack = true;
         }
         protected override void Die()

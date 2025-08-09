@@ -32,7 +32,7 @@ namespace Assets.Scripts
 
             float distanceToTarget = Vector3.Distance(transform.position, targetPos.position);
             MoveToTarget(distanceToTarget);
-            
+
         }
 
         private void RotateToTarget(Transform target)
