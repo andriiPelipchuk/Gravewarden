@@ -8,6 +8,7 @@ namespace Assets.Scripts
     {
         public float Health { get; protected set; }
         public float CurrentHP { get; protected set; }
+        public int Amount { get; protected set; }
         public float Speed { get; protected set; }
         public float AttackDamage { get; protected set; }
         public float AttackRange { get; protected set; }
