@@ -13,6 +13,10 @@ namespace Assets.Scripts.Core
             _soulCount = 0;
             UpdateSoulText();
         }
+        public int GetSoulCount()
+        {
+            return _soulCount;
+        }
         public void AddSouls(int amount)
         {
             _soulCount += amount;
@@ -21,6 +25,11 @@ namespace Assets.Scripts.Core
         private void UpdateSoulText()
         {
             _soulText.text = _soulCount.ToString();
-    }
+        }
+        public void LoadSouls( int souls)
+        {
+            _soulCount = souls;
+            UpdateSoulText();
+        }
     }
 }

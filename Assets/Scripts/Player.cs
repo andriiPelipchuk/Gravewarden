@@ -151,6 +151,7 @@ namespace Assets.Scripts
                 _animator.SetBool(MoveAnimationsHash, inputMagnitude > 0.1f);*/
             }
         }
+
         public override Transform FindClouserTarget()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetMasks);
@@ -204,9 +205,11 @@ namespace Assets.Scripts
             weapon.DeactivateHitbox();
             canAttack = true;
         }
+
         protected override void Die()
         {
-            Debug.Log("Player has died");
+            transform.GetChild(0).gameObject.SetActive(false);
+            EventManager.TriggerPlayerHasDied();
         }
     }
 }
