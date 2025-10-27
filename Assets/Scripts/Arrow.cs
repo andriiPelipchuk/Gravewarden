@@ -13,9 +13,10 @@ namespace Assets.Scripts
 
         private Vector3 _direction;
         private bool _achieveTarget = false;
-        private bool _blockTrigger = true;
 
         private float _damage;
+        private Character _character;
+
         private GameObject _owner;
 
         private IEnumerator coroutine;
@@ -41,7 +42,6 @@ namespace Assets.Scripts
         }
         public void AddTarget(Vector3 target) 
         {
-            _blockTrigger = false;
             transform.LookAt(target);
             _direction = (target - transform.position).normalized;
 
@@ -55,18 +55,28 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if(_blockTrigger)
-                return;
             if (other.gameObject == _owner) return;
 
-            var target = other.transform.parent?.GetComponent<Character>();
-            if (target != null)
+            if (other.gameObject.tag != "Player")
             {
-                target.TakeDamage(_damage);
+                Damage(false, other);
+            }
+            else
+            {
+                Damage(true, other);
             }
             _achieveTarget = true;
-            _blockTrigger = true;
             gameObject.transform.SetParent(other.transform, true);
+        }
+        private void Damage(bool isPlayer, Collider other)
+        {
+            if (isPlayer)
+                _character = other.transform.parent?.GetComponent<Character>();
+            else
+                _character = other.GetComponent<Character>();
+            if (_character == null)
+                return;
+            _character.TakeDamage(_damage);
         }
 
         private IEnumerator DisableProjectile()
@@ -77,7 +87,6 @@ namespace Assets.Scripts
         private void Deactivate()
         {
             gameObject.transform.parent = null;
-            _blockTrigger = false;
             _achieveTarget = false;
             arowsPool.ReturnObject(this);
         }

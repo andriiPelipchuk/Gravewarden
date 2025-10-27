@@ -23,12 +23,18 @@ namespace Assets.Scripts
         }
         void Update()
         {
-            if (character == null || character.Target == null && character.peacefuleTarget == null)
+            if (character == null)
                 return;
-            if(character.Target != null)
+
+            if(character.Target == null && character.peacefuleTarget == null)
+                return;
+
+            if (character.Target != null)
                 targetPos = character.Target;
-            else
+            else if (character.peacefuleTarget != null)
                 targetPos = character.peacefuleTarget.transform;
+            else
+                return;
 
             float distanceToTarget = Vector3.Distance(transform.position, targetPos.position);
             MoveToTarget(distanceToTarget);
@@ -48,8 +54,11 @@ namespace Assets.Scripts
 
         void MoveToTarget(float target)
         {
+
             if (target > stopDistance)
             {
+                if(agent == null)
+                    return;
                 if (!agent.hasPath || agent.destination != targetPos.position)
                 {
                     agent.SetDestination(targetPos.position);
@@ -57,12 +66,17 @@ namespace Assets.Scripts
             }
             else 
             {
-                if (agent.hasPath)
+                if (agent != null && agent.hasPath)
                 {
                     agent.ResetPath();
                 }
-                if (character.peacefuleTarget.transform == targetPos)
+                if (character.peacefuleTarget != null && character.peacefuleTarget.transform == targetPos)
+                {
+                    Debug.Log($"{gameObject.name}: target is peaceful ({character.peacefuleTarget.name}), not attacking.");
                     return;
+                }
+
+                Debug.Log($"{gameObject.name}: in range, attacking target {targetPos.name}");
                 character.Attack();
             }
             RotateToTarget(targetPos);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Assets.Scripts
 {
@@ -7,6 +8,7 @@ namespace Assets.Scripts
     {
         private float _currentDamage;
         private Collider _hitboxCollider;
+        private Character _owner;
 
         private void Awake()
         {
@@ -27,11 +29,27 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            var character = other.transform.parent?.GetComponent<Character>();
-            if (character != null)
+            if (other.gameObject.tag == gameObject.transform.parent?.tag)
+                return;
+            if (other.gameObject.tag != "Player")
             {
-                character.TakeDamage(_currentDamage);
+                Damage(false, other);
             }
+            else
+            {
+                Damage(true, other);
+            }
+
+        }
+        private void Damage(bool isPlayer, Collider other)
+        {
+            if(isPlayer)
+                _owner = other.transform.parent?.GetComponent<Character>();
+            else 
+                _owner = other.GetComponent<Character>();
+            if (_owner == null)
+                return;
+            _owner.TakeDamage(_currentDamage);
         }
     }
 }
