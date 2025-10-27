@@ -8,11 +8,6 @@ namespace Assets.Scripts.Core
         [SerializeField] private TextMeshProUGUI _soulText;
         private int _soulCount;
 
-        private void Start()
-        {
-            _soulCount = 0;
-            UpdateSoulText();
-        }
         public int GetSoulCount()
         {
             return _soulCount;

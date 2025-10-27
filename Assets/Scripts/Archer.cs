@@ -13,6 +13,7 @@ namespace Assets.Scripts
         public float coolDown = 3;
         public float rechange = 3;
         public float damage;
+        public int amount;
         public Transform bow;
 
         private AIMovement aiMovement;
@@ -25,6 +26,7 @@ namespace Assets.Scripts
         private bool coroutineIsRunning = false;
         void Start()
         {
+            Amount = amount;
             Health = health;
             CurrentHP = Health;
             AttackDamage = damage;
@@ -146,7 +148,8 @@ namespace Assets.Scripts
         }
         protected override void Die()
         {
-            Debug.Log("Enemy has died");
+            EventManager.TriggerEnemyHasDied(Amount);
+            gameObject.SetActive(false);
         }
     }
 }

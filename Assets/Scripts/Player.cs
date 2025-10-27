@@ -15,6 +15,7 @@ namespace Assets.Scripts
         public InputAction rollAction;
         public InputAction atackAction;
         public InputAction spawnAction;
+        public InputAction interactAction;
 
         [SerializeField] LayerMask targetMasks;
         public float detectionRadius = 2; 
@@ -52,6 +53,7 @@ namespace Assets.Scripts
             rollAction = inputActions.FindAction("Roll");
             atackAction = inputActions.FindAction("Attack");
             spawnAction = inputActions.FindAction("Spawn");
+            interactAction = inputActions.FindAction("Interact");
         }
 
         void Start()
@@ -93,6 +95,11 @@ namespace Assets.Scripts
             if (spawnAction.triggered)
             {
                 spawner.SpawnSkeleton();
+            }
+
+            if (interactAction.triggered)
+            {
+                EventManager.TriggerPlayerInteract();
             }
 
             HandleMovement();

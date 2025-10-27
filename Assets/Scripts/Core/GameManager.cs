@@ -1,4 +1,4 @@
-﻿using Mono.Cecil;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -16,13 +16,13 @@ namespace Assets.Scripts.Core
         private void OnEnable()
         {
             EventManager.EnemyHasDied += OnEnemyHasDied;
-            EventManager.PlayerHasDied += OnPlayerHasDied;
+            EventManager.PlayerHasDied += Respawn;
             EventManager.CheckpointReached += SaveGame;
         }
         private void OnDisable()
         {
             EventManager.EnemyHasDied -= OnEnemyHasDied;
-            EventManager.PlayerHasDied -= OnPlayerHasDied;
+            EventManager.PlayerHasDied -= Respawn;
             EventManager.CheckpointReached -= SaveGame;
         }
 
@@ -34,12 +34,16 @@ namespace Assets.Scripts.Core
         private void SaveGame(int pointID)
         {
             _saveManager.SaveGame(pointID, _soulManager.GetSoulCount());
+            Respawn();
+            LoadGame();
         }
         private void LoadGame()
         {
             var saveData = _saveManager.LoadGame();
             if (saveData == null)
             {
+                _saveManager.SaveGame(0, 0);
+                _soulManager.LoadSouls(0);
                 Debug.LogWarning("❌ Збереження не знайдено або пошкоджене.");
                 return;
             }
@@ -47,7 +51,7 @@ namespace Assets.Scripts.Core
 
             foreach (var checkpoint in _checkpoints)
             {
-                if (checkpoint.checkpointID == saveData.checkpoint)
+                if (checkpoint.checkpointId == saveData.checkpoint)
                 {
                     _currentCheckpoint = checkpoint;
                     break;
@@ -55,9 +59,9 @@ namespace Assets.Scripts.Core
             }
             _player.transform.position = _currentCheckpoint.transform.position;
         }
-        private void OnPlayerHasDied()
+        private void Respawn()
         {
-            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         private void OnEnemyHasDied(int amount)

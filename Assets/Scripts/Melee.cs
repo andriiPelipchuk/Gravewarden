@@ -12,6 +12,7 @@ namespace Assets.Scripts
         public float stopDistance = 2;
         public float coolDown = 1;
         public float damage;
+        public int amount;
 
         public Weapon weapon;
 
@@ -21,6 +22,7 @@ namespace Assets.Scripts
         [SerializeField] LayerMask targetMasks;
         void Start()
         {
+            Amount = amount;
             Health = health;
             CurrentHP = Health;
             AttackDamage = damage;
@@ -76,7 +78,8 @@ namespace Assets.Scripts
         }
         protected override void Die()
         {
-            Debug.Log("Enemy has died");
+            EventManager.TriggerEnemyHasDied(Amount);
+            gameObject.SetActive(false);
         }
 
     }

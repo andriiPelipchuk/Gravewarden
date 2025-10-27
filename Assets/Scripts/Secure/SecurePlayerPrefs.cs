@@ -5,9 +5,8 @@ using UnityEngine;
 
 public static class SecurePlayerPrefs
 {
-    // ⚠️ Замінити на свій ключ (32 байти = 256 біт)
-    private static readonly byte[] key = Encoding.UTF8.GetBytes("my_secret_key_1234567890123456");
-    private static readonly byte[] iv = Encoding.UTF8.GetBytes("my_secret_iv_123"); // 16 байт
+    private static readonly byte[] key = Encoding.UTF8.GetBytes("my_secret_key_123456789012345678");
+    private static readonly byte[] iv = Encoding.UTF8.GetBytes("my_secret_iv_123");
 
     public static void SetEncryptedString(string keyName, string value)
     {
