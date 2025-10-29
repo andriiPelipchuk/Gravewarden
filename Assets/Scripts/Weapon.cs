@@ -9,11 +9,13 @@ namespace Assets.Scripts
         private float _currentDamage;
         private Collider _hitboxCollider;
         private Character _owner;
+        private Character _recipient;
 
         private void Awake()
         {
             _hitboxCollider = GetComponent<Collider>();
             _hitboxCollider.enabled = false; 
+            _owner = GetComponentInParent<Character>();
         }
 
         public void ActivateHitbox(float damage)
@@ -29,7 +31,7 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == gameObject.transform.parent?.tag)
+            if (_owner == other.gameObject.GetComponent<Character>())
                 return;
             if (other.gameObject.tag != "Player")
             {
@@ -43,13 +45,13 @@ namespace Assets.Scripts
         }
         private void Damage(bool isPlayer, Collider other)
         {
-            if(isPlayer)
-                _owner = other.transform.parent?.GetComponent<Character>();
-            else 
-                _owner = other.GetComponent<Character>();
-            if (_owner == null)
+            if (isPlayer)
+                _recipient = other.transform.parent?.GetComponent<Character>();
+            else
+                _recipient = other.GetComponent<Character>();
+            if (_recipient == null)
                 return;
-            _owner.TakeDamage(_currentDamage);
+            _recipient.TakeDamage(_currentDamage);
         }
     }
 }

@@ -72,11 +72,11 @@ namespace Assets.Scripts
                 }
                 if (character.peacefuleTarget != null && character.peacefuleTarget.transform == targetPos)
                 {
-                    Debug.Log($"{gameObject.name}: target is peaceful ({character.peacefuleTarget.name}), not attacking.");
+                    
                     return;
                 }
 
-                Debug.Log($"{gameObject.name}: in range, attacking target {targetPos.name}");
+                //Debug.Log($"{gameObject.name}: in range, attacking target {targetPos.name}");
                 character.Attack();
             }
             RotateToTarget(targetPos);

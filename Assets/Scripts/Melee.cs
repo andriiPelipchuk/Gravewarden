@@ -39,12 +39,31 @@ namespace Assets.Scripts
         }
         public override Transform FindClouserTarget()
         {
+            if (targetMasks == 0)
+            {
+                Debug.LogWarning("Target masks are not set for the Archer.");
+                return null;
+            }
+            if (Target != null)
+            {
+                float distance = Vector3.Distance(transform.position, Target.position);
+                var targetCharacter = Target.GetComponent<Character>();
+
+                if (distance <= detectionRadius && targetCharacter != null && targetCharacter.CurrentHP > 0)
+                {
+                    return Target;
+                }
+            }
+
             Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, targetMasks);
             Transform closestTarget = null;
             float closestDistance = Mathf.Infinity;
 
             foreach (Collider col in colliders)
             {
+                var character = col.GetComponent<Character>();
+                if (character == null || character.gameObject.layer == gameObject.layer)
+                    continue;
                 float distance = Vector3.Distance(transform.position, col.transform.position);
                 if (distance < closestDistance)
                 {
@@ -53,7 +72,7 @@ namespace Assets.Scripts
                 }
             }
 
-            target = closestTarget; 
+            target = closestTarget;
             return target;
         }
 

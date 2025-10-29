@@ -77,6 +77,7 @@ namespace Assets.Scripts
             if (_character == null)
                 return;
             _character.TakeDamage(_damage);
+            print($"{_character.name} took {_damage} damage from arrow.");
         }
 
         private IEnumerator DisableProjectile()
