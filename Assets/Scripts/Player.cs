@@ -25,6 +25,7 @@ namespace Assets.Scripts
         public float rotationSpeed = 700;
         public float rollCooldown = 1;
 
+        public float stamina;
         public float health;
 
         public Transform cameraTransform;
@@ -67,6 +68,10 @@ namespace Assets.Scripts
             AttackDamage = 10f;
             AttackRange = 1.5f;
             AttackCooldown = 1f;
+            Stamina = stamina;
+            CurrentStamina = stamina;
+            _regenRate = stamina * 0.1f;
+            print(_regenRate);
         }
 
         private void OnEnable()
@@ -184,6 +189,7 @@ namespace Assets.Scripts
             _isRolling = true;
             _lastRollTime = Time.time;
             _rollDirection = transform.forward;
+            StaminaUse();
             Invoke("EndRoll", 0.5f);
         }
 
@@ -202,15 +208,18 @@ namespace Assets.Scripts
 
         private IEnumerator AttackCoroutine()
         {
-            canAttack = false;
+            inAnimation = true;
+            BooleanAtackCheck();
             if (_animator != null)
             {
                 weapon.ActivateHitbox(AttackDamage);
                 _animator.SetTrigger("Attack");
+                StaminaUse();
             }
             yield return new WaitForSeconds(AttackCooldown);
             weapon.DeactivateHitbox();
-            canAttack = true;
+            inAnimation = false;
+            BooleanAtackCheck();
         }
 
         protected override void Die()

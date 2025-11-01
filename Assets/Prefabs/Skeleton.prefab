@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 2544716433395398528}
   - component: {fileID: 519121333907847555}
   - component: {fileID: 7503381864089643327}
-  - component: {fileID: 6515028996524366325}
+  - component: {fileID: 148118884617282940}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93daaa08a41438b49a3bb24580d1a46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6515028996524366325
+--- !u!114 &148118884617282940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,9 +201,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1391371204947971370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0e162684afeb224786990a78b70ed80, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
 --- !u!1 &3775980059410555571
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,9 +583,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5649761a561f0d04bac1eadaaaf54842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StaminaFill: {fileID: 0}
+  StaminaBar: {fileID: 0}
   peacefuleTarget: {fileID: 0}
   HealthFill: {fileID: 552083322772696201}
-  HealthBar: {fileID: 6515028996524366325}
+  bar: {fileID: 0}
   detectionRadius: 4
   health: 50
   stopDistance: 2

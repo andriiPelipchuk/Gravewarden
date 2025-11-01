@@ -5,7 +5,7 @@ namespace Assets.Scripts
 {
     public class EnemyHeathBarManager : MonoBehaviour
     {
-        [SerializeField] HealthBar _healthBar;
+        [SerializeField] Bar _healthBar;
 
 
 
