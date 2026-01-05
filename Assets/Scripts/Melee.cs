@@ -62,6 +62,11 @@ namespace Assets.Scripts
             foreach (Collider col in colliders)
             {
                 var character = col.GetComponent<Character>();
+
+                if (col.gameObject.tag == "Player")
+                {
+                    character = col.GetComponentInParent<Character>();
+                }
                 if (character == null || character.gameObject.layer == gameObject.layer)
                     continue;
                 float distance = Vector3.Distance(transform.position, col.transform.position);

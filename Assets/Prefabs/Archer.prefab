@@ -405,6 +405,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &3051283140641101827
 CapsuleCollider:
@@ -479,7 +480,7 @@ MonoBehaviour:
   StaminaBar: {fileID: 0}
   peacefuleTarget: {fileID: 0}
   HealthFill: {fileID: 1545582577169627126}
-  bar: {fileID: 0}
+  bar: {fileID: 1885161101665301430}
   detectionRadius: 10
   health: 50
   stopDistance: 8

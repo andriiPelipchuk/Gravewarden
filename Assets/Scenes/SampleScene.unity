@@ -766,14 +766,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -1063,6 +1063,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &570962475
 MeshFilter:
@@ -1214,6 +1215,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &603438736
 MeshFilter:
@@ -1325,6 +1327,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &605045270
 MeshFilter:
@@ -1509,6 +1512,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &734838599
 MeshFilter:
@@ -1830,6 +1834,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2493,6 +2498,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2674,6 +2680,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1480568182
 MeshFilter:
@@ -2949,6 +2956,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+--- !u!114 &1720168254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1885161101665301430, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
+  m_PrefabInstance: {fileID: 2319941528433807085}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720168246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
 --- !u!1 &1746896622
 GameObject:
   m_ObjectHideFlags: 0
@@ -3125,7 +3143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7511953894253874792, guid: 28367e129e2305b4190b5ac999f215fb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3234,6 +3252,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1930985331
 MeshFilter:
@@ -3495,8 +3514,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -9144222235863350870, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
+      propertyPath: bar
+      value: 
+      objectReference: {fileID: 1720168254}
+    - target: {fileID: -9144222235863350870, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
       propertyPath: amount
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -9144222235863350870, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
+      propertyPath: StaminaBar
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: -9144222235863350870, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
       propertyPath: peacefuleTarget
@@ -3548,7 +3575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7511953894253874792, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2653640916411141971, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
