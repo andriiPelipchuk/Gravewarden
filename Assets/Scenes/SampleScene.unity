@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+  healthBarM: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,7 +1404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7511953894253874792, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2156,6 +2157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+  healthBarM: {fileID: 0}
 --- !u!1 &1256564619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2956,6 +2958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+  healthBarM: {fileID: 0}
 --- !u!114 &1720168254 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1885161101665301430, guid: a0690e0af8279864d9a26223ff2f94ed, type: 3}
@@ -3125,6 +3128,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4361583755072392783, guid: 28367e129e2305b4190b5ac999f215fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4527655010175213696, guid: 28367e129e2305b4190b5ac999f215fb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6012316991492642214, guid: 28367e129e2305b4190b5ac999f215fb, type: 3}
       propertyPath: amount
       value: 15
@@ -3143,6 +3154,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7511953894253874792, guid: 28367e129e2305b4190b5ac999f215fb, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7620344078608912072, guid: 28367e129e2305b4190b5ac999f215fb, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

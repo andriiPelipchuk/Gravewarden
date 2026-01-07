@@ -13,6 +13,7 @@ namespace Assets.Scripts
         public float coolDown = 1;
         public float damage;
         public int amount;
+        public HealthBarManager hpManager;
 
         public Weapon weapon;
 
@@ -28,6 +29,7 @@ namespace Assets.Scripts
             AttackDamage = damage;
             AttackRange = stopDistance;
             AttackCooldown = coolDown;
+            healthBarManager = hpManager;
 
             aiMovement = GetComponent<AIMovement>();
             aiMovement.AddParameters(this);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5377294218118412947}
   - component: {fileID: 3840131502789921693}
   - component: {fileID: 4024762738440765736}
+  - component: {fileID: 6108817997486896797}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6108817997486896797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214629852987735053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe57a72bb83ef34fbb2a1f4cf3c00db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.HeathBarManager
+  _healthBar: {fileID: 148118884617282940}
+  cooldown: 3
 --- !u!1 &1391371204947971370
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6104970385253468486
 RectTransform:
   m_ObjectHideFlags: 0
@@ -204,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+  healthBarM: {fileID: 6108817997486896797}
 --- !u!1 &3775980059410555571
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +310,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7626410328911321893
 MonoBehaviour:
@@ -500,6 +517,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &3051283140641101827
 CapsuleCollider:
@@ -594,6 +612,7 @@ MonoBehaviour:
   coolDown: 1
   damage: 0
   amount: 0
+  hpManager: {fileID: 6108817997486896797}
   weapon: {fileID: 7626410328911321893}
   _animator: {fileID: 3259909363195412225}
   targetMasks:

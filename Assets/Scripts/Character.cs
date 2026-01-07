@@ -39,13 +39,22 @@ namespace Assets.Scripts
         [Header("Health UI")]
         public Image HealthFill;
         public Bar bar;
+        protected HealthBarManager healthBarManager;
 
         public virtual void TakeDamage(float amount)
         {
             CurrentHP -= amount;
+
+            if (healthBarManager != null)
+                healthBarManager.ShowBar();
+
             bar.SetBar(CurrentHP, Health, HealthFill);
             if (CurrentHP <= 0)
             {
+                if (healthBarManager != null)
+                {
+                    StopCoroutine(healthBarManager._healthBarEnumerator);
+                }
                 Die();
             }
         }

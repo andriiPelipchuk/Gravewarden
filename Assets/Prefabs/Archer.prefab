@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2392449583890926433}
   - component: {fileID: 4827377863135061615}
   - component: {fileID: 3760828054049989204}
+  - component: {fileID: 3661684939084293875}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3661684939084293875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3205166485925857949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe57a72bb83ef34fbb2a1f4cf3c00db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.HeathBarManager
+  _healthBar: {fileID: 1885161101665301430}
+  cooldown: 3
 --- !u!1 &5684516820700659395
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &305616288663846196
 RectTransform:
   m_ObjectHideFlags: 0
@@ -204,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+  healthBarM: {fileID: 3661684939084293875}
 --- !u!1 &7085608702412966422
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +505,7 @@ MonoBehaviour:
   damage: 10
   amount: 0
   bow: {fileID: 6992687082485735674}
+  hpManager: {fileID: 3661684939084293875}
   targetMasks:
     serializedVersion: 2
     m_Bits: 136

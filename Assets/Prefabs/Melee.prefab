@@ -219,7 +219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1539833062163973195
 RectTransform:
   m_ObjectHideFlags: 0
@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2b0cf28bc5d624da2e4d80d67e4034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Bar
+  healthBarM: {fileID: 8005125194901071942}
 --- !u!1 &7456470060057822524
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +315,7 @@ GameObject:
   - component: {fileID: 40371673876378650}
   - component: {fileID: 5886278231467021263}
   - component: {fileID: 2319007010644846573}
+  - component: {fileID: 8005125194901071942}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -404,6 +406,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8005125194901071942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7456470060057822524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe57a72bb83ef34fbb2a1f4cf3c00db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.HeathBarManager
+  _healthBar: {fileID: 7676183153978582008}
+  cooldown: 3
 --- !u!1 &7511953894253874792
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +612,7 @@ MonoBehaviour:
   coolDown: 1
   damage: 0
   amount: 0
+  hpManager: {fileID: 8005125194901071942}
   weapon: {fileID: 4087122402882820688}
   _animator: {fileID: 5682065933042364014}
   targetMasks:

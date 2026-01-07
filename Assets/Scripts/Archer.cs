@@ -15,6 +15,7 @@ namespace Assets.Scripts
         public float damage;
         public int amount;
         public Transform bow;
+        public HealthBarManager hpManager;
 
         private AIMovement aiMovement;
         private ObjectPool objectPool;
@@ -32,6 +33,7 @@ namespace Assets.Scripts
             AttackDamage = damage;
             AttackRange = stopDistance;
             AttackCooldown = coolDown;
+            healthBarManager = hpManager;
 
             aiMovement = GetComponent<AIMovement>();
             aiMovement.AddParameters(this);
