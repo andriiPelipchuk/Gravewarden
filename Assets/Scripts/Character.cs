@@ -43,10 +43,10 @@ namespace Assets.Scripts
 
         public virtual void TakeDamage(float amount)
         {
-            CurrentHP -= amount;
-
             if (healthBarManager != null)
                 healthBarManager.ShowBar();
+
+            CurrentHP -= amount;          
 
             bar.SetBar(CurrentHP, Health, HealthFill);
             if (CurrentHP <= 0)
@@ -57,6 +57,16 @@ namespace Assets.Scripts
                 }
                 Die();
             }
+        }
+
+        public virtual void HealCharacter()
+        {
+            if (CurrentHP >= Health)
+                return;
+            CurrentHP += 10;
+
+            bar.SetBar(CurrentHP, Health, HealthFill);
+
         }
 
         public virtual void BooleanAtackCheck()
