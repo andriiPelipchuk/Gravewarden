@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data);
         SecurePlayerPrefs.SetEncryptedString("save_data", json);
-        Debug.Log("✅ Збереження виконано!");
+        Debug.Log("Збереження виконано!");
     }
 
     public CheckpointData LoadGame()
@@ -25,7 +25,7 @@ public class SaveManager : MonoBehaviour
         }
 
         CheckpointData data = JsonUtility.FromJson<CheckpointData>(json);
-        Debug.Log($"✅ Завантажено: Level={data.checkpoint}, Souls={data.soulsData}");
+        Debug.Log($"Uploaded: Level={data.checkpoint}, Souls={data.soulsData}");
         return data;
     }
 
